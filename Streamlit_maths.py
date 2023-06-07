@@ -129,18 +129,18 @@ def project6_page():
     sd      standard deviation
     """)
 
-    n = st.number_input("Number of values", min_value=0, step=1, value = 12000)
-    a = st.number_input("Arithmetic mean", value = 297514)
-    h = st.number_input("Harmonic mean", value = 297912)
-    sd = st.number_input("Standard deviation", value = 4363)
+    tab = [12000, 297514, 297912, 4363]
 
-    tab = [n, a, h, sd]
+    st.write(f"   Number of values:   {tab[0]}")
+    st.write(f"   Standard deviation: {tab[3]:.2f}")
+    st.write(f"   Arithmetic mean:    {tab[1]:.2f}")
+    st.write(f"   Root mean square:   {tab[3]:.2f}")
+    st.write(f"   Harmonic mean:      {tab[2]:.2f}\n")
 
-    if st.button("Enter next value"):
-        value = st.number_input("Value")
-        result = project6.calculate_stats(tab, value)
-        if result is not None:
-            st.error("Invalid input. Please enter a numeric value.")
+    value = st.number_input("Value", value = 299042)
+    result = project6.calculate_stats(tab, value)
+    if result is not None:
+        st.error("Invalid input. Please enter a numeric value.")
 
 def project9_page():
     st.title("209poll")
