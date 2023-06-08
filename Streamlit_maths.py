@@ -1,17 +1,22 @@
 import streamlit as st
-import math
+import subprocess
+from pathlib import Path
+import sys
+import subprocess
 import project1
 import project2
 import project3
 import project4
 import project5
 import project6
+import project7
+import project8
 import project9
 import subprocess
 
 def main():
     st.sidebar.title("Math Projects Tek2")
-    project_selection = st.sidebar.radio("Select Project", ("201yams", "202Unsold","203hotline","204ducks","205IQ","206neutrinos","209poll"))
+    project_selection = st.sidebar.radio("Select Project", ("201yams", "202unsold","203hotline","204ducks","205IQ","206neutrinos",'207demography',"208dowels","209poll"))
 
     if project_selection == "201yams":
         project1_page()
@@ -25,6 +30,10 @@ def main():
         project5_page()
     elif project_selection == "206neutrinos":
         project6_page()
+    elif project_selection == "207demography":
+        project7_page()
+    elif project_selection == "208dowels":
+        project8_page()
     elif project_selection == "209poll":
         project9_page()
 
@@ -141,6 +150,44 @@ def project6_page():
     result = project6.calculate_stats(tab, value)
     if result is not None:
         st.error("Invalid input. Please enter a numeric value.")
+
+def project7_page():
+    st.title("207demography")
+
+    st.markdown("""
+    \n**DESCRIPTION**\n
+    code    country code
+    """)
+
+    user_input = st.text_input("Enter country code(s) separated by space")
+    country_codes = user_input.split()
+
+    if st.button("Compute Percentage Below"):
+        project7.main(country_codes)
+
+def project8_page():
+    st.title("208dowels")
+
+    st.markdown("""
+    \n**DESCRIPTION**\n
+    Oi  size of the observed class
+    """)
+
+    values = [0 for _ in range(9)]
+
+    if st.button("Compute Percentage Below"):
+        try:
+            st.sidebar.title("Input Values")
+
+            values = [st.number_input(f"Value {i+1}", min_value=0, max_value=100, value=values[i]) for i in range(9)]
+            if sum(values) != 100 or sum(1 for number in values if number < 0) > 0:
+                st.error("Invalid input! The sum of values should be 100 and all values should be non-negative.")
+                return
+
+            main(values)
+
+        except:
+            st.error("An error occurred during the calculation.")
 
 def project9_page():
     st.title("209poll")
