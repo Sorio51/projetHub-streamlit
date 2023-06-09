@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-##
-## EPITECH PROJECT, 2023
-## B-MAT-400-MPL-4-1-209poll-sacha.dessaint
-## File description:
-## 209poll
-##
-
 import math
 import sys
 import streamlit as st

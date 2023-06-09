@@ -1,8 +1,5 @@
 import streamlit as st
 import subprocess
-from pathlib import Path
-import sys
-import subprocess
 import project1
 import project2
 import project3
@@ -12,7 +9,6 @@ import project6
 import project7
 import project8
 import project9
-import subprocess
 
 def main():
     st.sidebar.title("Math Projects Tek2")
@@ -171,23 +167,17 @@ def project8_page():
     st.markdown("""
     \n**DESCRIPTION**\n
     Oi  size of the observed class
+
+    you can use those values : [6, 4, 10, 18, 20, 19, 11, 5, 7]
     """)
 
-    values = [0 for _ in range(9)]
+    values_input = [0 for _ in range(9)]
+
+    for i in range(9):
+        values_input[i] = st.number_input(f"Enter size for observed class {i+1}", value=0)
 
     if st.button("Compute Percentage Below"):
-        try:
-            st.sidebar.title("Input Values")
-
-            values = [st.number_input(f"Value {i+1}", min_value=0, max_value=100, value=values[i]) for i in range(9)]
-            if sum(values) != 100 or sum(1 for number in values if number < 0) > 0:
-                st.error("Invalid input! The sum of values should be 100 and all values should be non-negative.")
-                return
-
-            main(values)
-
-        except:
-            st.error("An error occurred during the calculation.")
+        project8.main(values_input)
 
 def project9_page():
     st.title("209poll")

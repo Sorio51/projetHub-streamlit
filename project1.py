@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-##
-## EPITECH PROJECT, 2023
-## 201yams
-## File description:
-## Yams Probability
-##
-
 import sys
 import math
 import streamlit as st

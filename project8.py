@@ -32,47 +32,40 @@ def lethimcook(values, free_d, sum_sq):
         f_val = "P < 1%"
     return f_val
 
-def main(values):
-        quoicoubeh = [st.number_input(f"Value {i+1}", min_value=0, max_value=100, value=values[i]) for i in range(9)]
-        if sum(quoicoubeh) != 100 or sum(1 for number in quoicoubeh if number < 0) > 0:
-            st.error("Invalid input! The sum of values should be 100 and all values should be non-negative.")
-            return
+def main(values_player):
+    quoicoubeh = values_player
+    if sum(quoicoubeh) != 100 or sum(1 for number in quoicoubeh if number < 0) > 0:
+        st.error("Invalid input! The sum of values should be 100 and all values should be non-negative.")
+        return
 
-        off_l, off_r = 0, 0
-        res, feur = [], []
+    off_l, off_r = 0, 0
+    res, feur = [], []
 
-        prob = sum([i * quoicoubeh[i] for i in range(len(quoicoubeh))]) / pow(10, 4)
+    prob = sum([i * quoicoubeh[i] for i in range(len(quoicoubeh))]) / pow(10, 4)
 
-        while quoicoubeh[0] < 10:
-            quoicoubeh[0] = quoicoubeh[0] + quoicoubeh[1]
-            quoicoubeh.remove(quoicoubeh[1])
-            off_l += 1
-
-        quoicoubeh.reverse()
-
-        while quoicoubeh[0] < 10:
-            quoicoubeh[0] = quoicoubeh[0] + quoicoubeh[1]
-            quoicoubeh.remove(quoicoubeh[1])
-            off_r += 1
-
-        quoicoubeh.reverse()
-
-        for i in range(8):
-            feur.append((factorial(100) / (factorial(i) * factorial(100 - i))) * 100 * pow(1 - prob, 100 - i) * pow(prob, i))
-
-        feur.append(100 - sum(i for i in feur))
-        res.append(sum(feur[:off_l + 1]))
-        res += (i for i in feur[off_l + 1:])
-        res = res[:len(res) - 1 - off_r]
-        res.append(sum(i for i in feur[(len(feur) - 1 - off_r):]))
-
-        st.header("Output")
-        st.write("Ox: ", end='')
-        st.write("\t|\t".join(str(i) for i in quoicoubeh) + "\t|\t100")
-        st.write("Tx: ", end='')
-        st.write("\t|\t".join("%.1f" % i for i in res) + "\t|\t100")
-
-        st.write("Distribution: B(100, %.4f)" % prob)
-        st.write("Chi-squared: %.3f" % sum(pow(quoicoubeh[i] - res[i], 2) / res[i] for i in range(len(res))))
-        st.write("Degrees of freedom: %d" % (len(res) - 2))
-        st.write("Fit validity: %s" % lethimcook(values, len(res) - 2, sum(pow(quoicoubeh[i] - res[i], 2) / res[i] for i in range(len(res)))))
+    while quoicoubeh[0] < 10:
+        quoicoubeh[0] = quoicoubeh[0] + quoicoubeh[1]
+        quoicoubeh.remove(quoicoubeh[1])
+        off_l += 1
+    quoicoubeh.reverse()
+    while quoicoubeh[0] < 10:
+        quoicoubeh[0] = quoicoubeh[0] + quoicoubeh[1]
+        quoicoubeh.remove(quoicoubeh[1])
+        off_r += 1
+    quoicoubeh.reverse()
+    for i in range(8):
+        feur.append((factorial(100) / (factorial(i) * factorial(100 - i))) * 100 * pow(1 - prob, 100 - i) * pow(prob, i))
+    feur.append(100 - sum(i for i in feur))
+    res.append(sum(feur[:off_l + 1]))
+    res += (i for i in feur[off_l + 1:])
+    res = res[:len(res) - 1 - off_r]
+    res.append(sum(i for i in feur[(len(feur) - 1 - off_r):]))
+    st.header("Output")
+    st.write("Ox: ", end='')
+    st.write("\t|\t".join(str(i) for i in quoicoubeh) + "\t|\t100")
+    st.write("Tx: ", end='')
+    st.write("\t|\t".join("%.1f" % i for i in res) + "\t|\t100")
+    st.write("Distribution: B(100, %.4f)" % prob)
+    st.write("Chi-squared: %.3f" % sum(pow(quoicoubeh[i] - res[i], 2) / res[i] for i in range(len(res))))
+    st.write("Degrees of freedom: %d" % (len(res) - 2))
+    st.write("Fit validity: %s" % lethimcook(values, len(res) - 2, sum(pow(quoicoubeh[i] - res[i], 2) / res[i] for i in range(len(res)))))
